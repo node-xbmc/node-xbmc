@@ -1,0 +1,27 @@
+{
+  "name": "xbmc",
+  "version": "0.0.1",
+  "description": "XBMC api",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "node-promise": "0.5.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/moul/node-xbmc"
+  },
+  "keywords": [
+    "xbmc",
+    "api"
+  ],
+  "author": "Manfred Touron <m@42.am>",
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
