@@ -33,7 +33,7 @@ class Connection
   @generateId: -> "__id#{++Connection._id}"
 
   isActive: =>
-    return @socket?.writable is true
+    return @socket?._connecting is false
 
   send: (data = null) =>
     throw new Error 'Connection: Unknown arguments' if not data
@@ -62,7 +62,8 @@ class Connection
   onOpen: =>
     @publish 'open'
     setTimeout (=>
-      @sendQueue.forEach ((item) => @send item), @
+      for item in @sendQueue
+        @send item
       @sendQueue = []
     ), 500
 
@@ -83,7 +84,7 @@ class Connection
       rawlines = raw.split splitStr
       lines = []
       for rawline in rawlines
-        continue unless line.length
+        continue unless rawline.length
         str = splitStr + rawline
         line = JSON.parse str
         lines.push line

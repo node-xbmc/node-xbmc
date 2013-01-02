@@ -8,8 +8,9 @@ class Handlers
 
   @players: (data) =>
     playerId = (data.result?[0] || data.player || {}).playerid
-    dfd = @api.send 'Player.GetItem', { playerid: playerId }
-    dfd.then @playerItem
+    if playerId
+      dfd = @api.send 'Player.GetItem', { playerid: playerId }
+      dfd.then @playerItem
 
   @playerItem: (data) =>
     unless data.result.item.id
