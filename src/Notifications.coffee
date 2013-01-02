@@ -10,6 +10,7 @@ class Notifications
   @delegate: (data) =>
     type = data.method.split('.On')[1].toLowerCase()
     fn = @[type]
+    pubsub.emit "notification:#{type}", data
     if fn
       fn data.params.data
     else

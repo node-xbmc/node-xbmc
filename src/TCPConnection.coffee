@@ -7,10 +7,13 @@ net =     require 'net'
 
 class Connection
   constructor: (@options = {}) ->
-    @options.port ?= 9090
-    @options.host ?= '127.0.0.1'
-    @options.verbose ?= false
+    @options.port       ?= 9090
+    @options.host       ?= '127.0.0.1'
+    @options.user       ?= 'xbmc'
+    @options.password   ?= false
+    @options.verbose    ?= false
     @options.connectNow ?= true
+
     @sendQueue = []
     @deferreds = {}
     if @options.connectNow

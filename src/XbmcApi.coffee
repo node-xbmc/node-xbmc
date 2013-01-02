@@ -11,15 +11,20 @@ class XbmcApi
     require('./Notifications').mixin @
     require('./Handlers').mixin      @
 
+    @pubsub = pubsub
+
     pubsub.on 'connection:open', =>      @message 'Attached to XBMC instance.'
     pubsub.on 'connection:notification', @notifications.delegate
+
+  on: (evt, callback) -> pubsub.on evt, callback
+  emit: (evt, data) -> pubsub.emit evt, data
 
   setConnection: (newConnection) =>
     @connection.close() if @connection
     @connection = newConnection
     @queue.forEach (item) -> @send item.method, item.params, item.dfd
     @queue = []
-    setTimeout @initialize, 1000
+    do @initialize
 
   initialize: =>
     obj = @send 'Player.GetActivePlayers'
@@ -38,15 +43,14 @@ class XbmcApi
     return connDfd
 
   scrub: (data) ->
-    if data.thumbnail
-      data.thumbnail = decodeURIComponent data.thumbnail.replace(/^image:\/\/|\/$/ig, '')
+    data.thumbnail = decodeURIComponent data.thumbnail.replace(/^image:\/\/|\/$/ig, '') if data.thumbnail
     return data
 
   message: (message = '', title = 'node-xbmc', displayTime = 6000) =>
     options =
       message:     message
       title:       title
-      displayTime: displayTime
+      displaytime: displayTime
     @send 'GUI.ShowNotification', options
 
   connect: =>
