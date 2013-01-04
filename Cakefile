@@ -13,8 +13,8 @@ system = (command, args) ->
 build = (fn = null) ->
   call 'coffee',     ['-c', '-o', 'lib', 'src']
   call 'coffee',     ['-c', '-o', 'examples', 'examples']
-  call 'browserify', ['src/BrowserEntry.coffee', '-o', 'browser/icecast-admin.js'], ->
-    call "minifyjs", ['--engine', 'yui', '--level', '2', 'browser/icecast-admin.js', '>', 'browser/icecast-admin.min.js'], fn
+  #call 'browserify', ['src/BrowserEntry.coffee', '-o', 'browser/icecast-admin.js'], ->
+  #  call "minifyjs", ['--engine', 'yui', '--level', '2', 'browser/icecast-admin.js', '>', 'browser/icecast-admin.min.js'], fn
 
 task 'build', 'continually build the JavaScript code', ->
   build ->
