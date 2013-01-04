@@ -56,7 +56,9 @@ class Connection
 
   publish: (topic, data = {}) =>
     #data.connection = @
-    console.log "[connection:#{topic}]", data if @options.verbose
+    if @options.verbose
+      dataVerbose = if typeof(data) is 'object' then JSON.stringify data else data
+      console.log "[connection:#{topic}]", dataVerbose if @options.verbose
     pubsub.emit "connection:#{topic}", data
 
   onOpen: =>
