@@ -40,7 +40,10 @@
       }
     }
     console.log("" + table.length + " Movies");
-    return console.log(table.toString());
+    console.log(table.toString());
+    return xbmcApi.disconnect(function() {
+      return process.exit(0);
+    })();
   });
 
 }).call(this);

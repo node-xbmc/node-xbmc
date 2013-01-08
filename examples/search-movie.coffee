@@ -29,3 +29,4 @@ xbmcApi.on 'api:movies', (movies) ->
     table.push [movie.movieid, movie.label, movie.genre.join(', '), movie.year] if movie.label.match re
   console.log "#{table.length} Movies"
   console.log table.toString()
+  do xbmcApi.disconnect -> process.exit 0
