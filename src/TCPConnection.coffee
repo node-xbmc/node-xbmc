@@ -49,11 +49,14 @@ class Connection
       @socket.write data
     return dfd.promise
 
-  close: =>
+  close: (fn = null) =>
     try
-      do @socket.close
+      do @socket.end
+      do @socket.destroy
+      do fn if fn
     catch err
       @publish 'error', err
+      fn err if fn
 
   publish: (topic, data = {}) =>
     #data.connection = @

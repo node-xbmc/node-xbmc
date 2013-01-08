@@ -63,4 +63,8 @@ class XbmcApi
       @connection.close() if @connection.isActive()
       @connection.create()
 
+  disconnect: (fn = null) =>
+    return @connection.close fn if @connection?.isActive()
+    do fn
+
 module.exports = XbmcApi
