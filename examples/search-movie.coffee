@@ -15,18 +15,18 @@ xbmcApi = new XbmcApi
   connection: connection
 
 xbmcApi.media.movies
-  properties: ['genre', 'year']
+  properties: ['file']
 
 query = process.argv[2]
 re = new RegExp query, "i"
 
 table = new Table
-  head:      ['#', 'Label', 'Genre', 'Year']
+  head:      ['#', 'Label']
 table.options.style.compact = true
 
 xbmcApi.on 'api:movies', (movies) ->
   for movie in movies
-    table.push [movie.movieid, movie.label, movie.genre.join(', '), movie.year] if movie.label.match re
+    table.push [movie.movieid, movie.label, movie.file] if movie.label.match re
   console.log "#{table.length} Movies"
   console.log table.toString()
   do xbmcApi.disconnect -> process.exit 0

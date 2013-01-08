@@ -18,7 +18,7 @@
   });
 
   xbmcApi.media.movies({
-    properties: ['genre', 'year']
+    properties: ['file']
   });
 
   query = process.argv[2];
@@ -26,7 +26,7 @@
   re = new RegExp(query, "i");
 
   table = new Table({
-    head: ['#', 'Label', 'Genre', 'Year']
+    head: ['#', 'Label']
   });
 
   table.options.style.compact = true;
@@ -36,7 +36,7 @@
     for (_i = 0, _len = movies.length; _i < _len; _i++) {
       movie = movies[_i];
       if (movie.label.match(re)) {
-        table.push([movie.movieid, movie.label, movie.genre.join(', '), movie.year]);
+        table.push([movie.movieid, movie.label, movie.file]);
       }
     }
     console.log("" + table.length + " Movies");
