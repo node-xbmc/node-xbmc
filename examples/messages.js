@@ -19,22 +19,19 @@
     connection: connection
   });
 
-  setTimeout((function() {
-    return xbmcApi.message('2s: Hello World');
-  }), 2000);
-
-  setTimeout((function() {
-    return xbmcApi.message('5s: Lorem Ipsum');
-  }), 5000);
-
-  setTimeout((function() {
-    return xbmcApi.message('9s: Batman !!!');
-  }), 9000);
-
-  setInterval((function() {
-    return xbmcApi.message('10s: Interval');
-  }), 10000);
-
-  console.log('done');
+  xbmcApi.on('connection:open', function() {
+    setTimeout((function() {
+      return xbmcApi.message('2s: Hello World');
+    }), 2000);
+    setTimeout((function() {
+      return xbmcApi.message('5s: Lorem Ipsum');
+    }), 5000);
+    setTimeout((function() {
+      return xbmcApi.message('9s: Batman !!!');
+    }), 9000);
+    return setInterval((function() {
+      return xbmcApi.message('10s: Interval');
+    }), 10000);
+  });
 
 }).call(this);

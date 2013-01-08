@@ -14,9 +14,8 @@ xbmcApi = new XbmcApi
   silent:     true
   connection: connection
 
-setTimeout  (-> xbmcApi.message '2s: Hello World'), 2000
-setTimeout  (-> xbmcApi.message '5s: Lorem Ipsum'), 5000
-setTimeout  (-> xbmcApi.message '9s: Batman !!!'),  9000
-setInterval (-> xbmcApi.message '10s: Interval'),  10000
-
-console.log 'done'
+xbmcApi.on 'connection:open', ->
+  setTimeout  (-> xbmcApi.message '2s: Hello World'), 2000
+  setTimeout  (-> xbmcApi.message '5s: Lorem Ipsum'), 5000
+  setTimeout  (-> xbmcApi.message '9s: Batman !!!'),  9000
+  setInterval (-> xbmcApi.message '10s: Interval'),  10000
