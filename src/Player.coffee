@@ -17,6 +17,10 @@ class Player
 
   @openYoutube: (id, options = {}, fn = null) =>
     item = file: "plugin://plugin.video.youtube/?action=play_video&videoid=#{id}"
-    @api.player.open item, options, fn
+    @open item, options, fn
+
+  @openFile: (file, options = {}, fn = null) =>
+    item = file: file
+    @open item, options, fn
 
 module.exports = Player
