@@ -6,23 +6,27 @@ class XbmcApi
   constructor: (@options = {}) ->
     @queue = []
     @connection = null
-
-    require('./Media').mixin         @
-    require('./Notifications').mixin @
-    require('./Handlers').mixin      @
-
     @pubsub = pubsub
+
+    do @loadModules
 
     pubsub.on 'connection:open', =>
       unless @options.silent
         @message 'Attached to XBMC instance.'
     pubsub.on 'connection:notification', @notifications.delegate
 
-    if @options.connection?
-      @setConnection @options.connection
+    @setConnection @options.connection if @options.connection?
 
   on: (evt, callback) -> pubsub.on evt, callback
   emit: (evt, data) -> pubsub.emit evt, data
+
+  loadModules: =>
+    require(module).mixin @ for module in [
+      './Media'
+      './Notifications'
+      './Handlers'
+      './Player'
+      ]
 
   setConnection: (newConnection) =>
     @connection.close() if @connection
