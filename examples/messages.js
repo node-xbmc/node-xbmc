@@ -14,9 +14,10 @@
     verbose: true
   });
 
-  xbmcApi = new XbmcApi;
-
-  xbmcApi.setConnection(connection);
+  xbmcApi = new XbmcApi({
+    silent: true,
+    connection: connection
+  });
 
   setTimeout((function() {
     return xbmcApi.message('2s: Hello World');

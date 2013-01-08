@@ -3,7 +3,7 @@
 pubsub = require './PubSub'
 
 class XbmcApi
-  constructor: ->
+  constructor: (@options = {}) ->
     @queue = []
     @connection = null
 
@@ -13,8 +13,13 @@ class XbmcApi
 
     @pubsub = pubsub
 
-    pubsub.on 'connection:open', =>      @message 'Attached to XBMC instance.'
+    pubsub.on 'connection:open', =>
+      unless @options.silent
+        @message 'Attached to XBMC instance.'
     pubsub.on 'connection:notification', @notifications.delegate
+
+    if @options.connection?
+      @setConnection @options.connection
 
   on: (evt, callback) -> pubsub.on evt, callback
   emit: (evt, data) -> pubsub.emit evt, data

@@ -7,11 +7,12 @@ TCPConnection = require '../lib/TCPConnection'
 XbmcApi =       require '../lib/XbmcApi'
 
 connection = new TCPConnection
-  host:    '127.0.0.1'
-  port:    9090
-  verbose: true
+  host:       '127.0.0.1'
+  port:       9090
+  verbose:    true
 xbmcApi = new XbmcApi
-xbmcApi.setConnection connection
+  silent:     true
+  connection: connection
 
 setTimeout  (-> xbmcApi.message '2s: Hello World'), 2000
 setTimeout  (-> xbmcApi.message '5s: Lorem Ipsum'), 5000
