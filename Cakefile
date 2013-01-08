@@ -16,7 +16,15 @@ build = (fn = null) ->
   #call 'browserify', ['src/BrowserEntry.coffee', '-o', 'browser/icecast-admin.js'], ->
   #  call "minifyjs", ['--engine', 'yui', '--level', '2', 'browser/icecast-admin.js', '>', 'browser/icecast-admin.min.js'], fn
 
-task 'build', 'continually build the JavaScript code', ->
+watch = (fn = null) ->
+  system 'coffee',     ['-w', '-c', '-o', 'lib', 'src']
+  system 'coffee',     ['-w', '-c', '-o', 'examples', 'examples']
+
+task 'watch', 'continually build the JavaScript code', ->
+  watch ->
+    console.log "Done !"
+
+task 'build', 'build the JavaScript code', ->
   build ->
     console.log "Done !"
 
