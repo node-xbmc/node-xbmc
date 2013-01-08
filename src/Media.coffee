@@ -31,7 +31,7 @@ class Media
       pubsub.emit 'api:movies', data.result.movies
       fn data if fn
 
-  @movie: (id) =>
+  @movie: (id, fn = null) =>
     dfd = @api.send 'VideoLibrary.GetMovieDetails',
       movieid: id
       properties: [
@@ -42,6 +42,8 @@ class Media
         'thumbnail'
       ]
     dfd.then (data) =>
-      pubsub.emit 'api:movie', @api.scrub data.result.moviedetails
+      d = @api.scrub data.result.moviedetails
+      pubsub.emit 'api:movie', d
+      fn d if fn
 
 module.exports = Media
