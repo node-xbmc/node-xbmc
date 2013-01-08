@@ -14,6 +14,7 @@ class Connection
     @options.verbose    ?= false
     @options.connectNow ?= true
 
+    @readRaw = ''
     @sendQueue = []
     @deferreds = {}
     if @options.connectNow
@@ -76,21 +77,25 @@ class Connection
     @publish 'close', evt
 
   parseBuffer: (buffer) =>
-    raw = buffer.toString()
+    @readRaw += buffer.toString()
+    lines = []
     try
-      line = JSON.parse raw
-      return [line]
+      line = JSON.parse @readRaw
+      lines.push line
+      @readRaw = ''
     catch err
       # Hack: sometimes json are concat
       splitStr = '{"jsonrpc":"2.0"'
-      rawlines = raw.split splitStr
+      rawlines = @readRaw.split splitStr
       lines = []
       for rawline in rawlines
         continue unless rawline.length
         str = splitStr + rawline
-        line = JSON.parse str
-        lines.push line
-      return lines
+        try
+          line = JSON.parse str
+          lines.push line
+          @readRaw = ''
+    return lines
 
   onMessage: (buffer) =>
     lines = @parseBuffer buffer
