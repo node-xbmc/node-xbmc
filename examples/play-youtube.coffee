@@ -13,4 +13,5 @@ xbmcApi = new XbmcApi
   silent:     true
   connection: connection
 
-xbmcApi.player.openYoutube 'QH2-TGUlwu4'
+id = process.argv[2] || 'QH2-TGUlwu4' # nyan cat
+xbmcApi.player.openYoutube id
