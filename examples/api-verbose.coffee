@@ -5,10 +5,11 @@
 
 TCPConnection = require '../lib/TCPConnection'
 XbmcApi =       require '../lib/XbmcApi'
+config =        require './config'
 
 connection = new TCPConnection
-  host:    '127.0.0.1'
-  port:    9090
+  host:    config.connection.host
+  port:    config.connection.port
   verbose: true
 xbmcApi = new XbmcApi
 

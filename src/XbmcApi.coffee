@@ -69,6 +69,6 @@ class XbmcApi
 
   disconnect: (fn = null) =>
     return @connection.close fn if @connection?.isActive()
-    do fn
+    do fn if fn
 
 module.exports = XbmcApi
