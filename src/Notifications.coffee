@@ -36,4 +36,12 @@ class Notifications
 
   @screensaverdeactivated: =>
 
+  @seek: =>
+
+  @volumechanged: =>
+
+  @inputrequested: =>
+
+  @inputfinished: =>
+
 module.exports = Notifications
