@@ -8,4 +8,10 @@
     }
   };
 
+  try {
+    module.exports = require('./config.local');
+  } catch (e) {
+
+  }
+
 }).call(this);
