@@ -26,6 +26,7 @@ class XbmcApi
       './Notifications'
       './Handlers'
       './Player'
+      './Input'
       ]
 
   setConnection: (newConnection) =>
