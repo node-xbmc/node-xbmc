@@ -56,7 +56,8 @@ class XbmcApi
     data.thumbnail = decodeURIComponent data.thumbnail.replace(/^image:\/\/|\/$/ig, '') if data.thumbnail
     return data
 
-  message: (message = '', title = 'node-xbmc', displayTime = 6000) =>
+  message: (message = '', title = null, displayTime = 6000) =>
+    title ?= @options.agent || 'node-xbmc'
     options =
       message:     message
       title:       title
