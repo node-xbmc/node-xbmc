@@ -8,8 +8,8 @@ XbmcApi =       require '../lib/XbmcApi'
 config =        require './config'
 
 connection = new TCPConnection
-  host:    config.connection.host
-  port:    config.connection.port
+  host:       config.connection.host
+  port:       config.connection.port
   verbose:    false
 xbmcApi = new XbmcApi
   silent:     true
