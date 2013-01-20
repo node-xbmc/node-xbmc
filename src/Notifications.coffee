@@ -9,10 +9,9 @@ class Notifications
 
   @delegate: (data) =>
     type = data.method.split('.On')[1].toLowerCase()
-    fn = @[type]
     pubsub.emit "notification:#{type}", data
-    if fn
-      fn data.params.data
+    if @[type]?
+      @[type] data.params.data
     else
       console.log "Unhandled notification type: #{type}"
 
@@ -40,8 +39,12 @@ class Notifications
 
   @volumechanged: =>
 
-  @inputrequested: =>
+  @inputrequested: => pubsub.emit 'api:Input.OnInputRequested'
 
-  @inputfinished: =>
+  @inputfinished: =>  pubsub.emit 'api:Input.OnInputFinished'
+
+  @wake: =>
+
+  @sleep: =>
 
 module.exports = Notifications
