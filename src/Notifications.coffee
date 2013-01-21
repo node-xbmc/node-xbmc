@@ -47,4 +47,6 @@ class Notifications
 
   @sleep: =>
 
+  @remove: =>
+
 module.exports = Notifications
