@@ -14,6 +14,15 @@ class Input
       pubsub.emit 'api:Input.SendText', data
       fn data if fn
 
+  @ExecuteAction: (action, fn = null) =>
+    if @inputActions.indexOf(action) is -1
+      throw new Error "Input.Action #{action} does not exists"
+    dfd = @api.send 'Input.ExecuteAction'
+      action: action
+    dfd.then (data) ->
+      pubsub.emit 'api:Input.ExecuteAction', data
+      fn data if fn
+
   @inputMethods: ['Up', 'Down', 'Left', 'Right', 'Select', 'ShowCodec', 'ShowOSD', 'Info', 'Home', 'Down', 'ContextMenu', "Back"]
 
   # TODO: ExecuteAction with http://wiki.xbmc.org/index.php?title=JSON-RPC_API/v6#Input.Action
