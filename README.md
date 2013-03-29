@@ -19,6 +19,8 @@ All classes are created asynchronously.
 All classes share a PubSub instance.
 `XbmcApi.on` and `XbmcApi.emit` are wrappers to the shared PubSub. For instance:
 
+In CoffeeScript :
+
 ```coffee
 connection = new TCPConnection
   host:    '127.0.0.1'
@@ -30,6 +32,25 @@ xbmc.setConnection connection
 xbmc.on 'connection:open',                        -> console.log 'Connection is open'
 xbmc.on 'connection:data', (data)                 -> console.log 'Received data:',         data
 xbmc.on 'connection:notification', (notification) -> console.log 'Received notification:', notification
+```
+
+In JavaScript :
+
+```javascript
+  var Xbmc = require('xbmc');
+  
+  var connection = new Xbmc.TCPConnection({
+    host: '127.0.0.1',
+    port: 9000,
+    verbose: false
+  });
+  var xbmcApi = new Xbmc.XbmcApi;
+
+  xbmcApi.setConnection(connection);
+
+  xbmcApi.on('connection:data', function()  { console.log('onData');  });
+  xbmcApi.on('connection:open', function()  { console.log('onOpen');  });
+  xbmcApi.on('connection:close', function() { console.log('onClose'); });
 ```
 
 TCPConnection uses a deferred (promise) mechanism.
