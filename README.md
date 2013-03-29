@@ -16,7 +16,7 @@ Basics
 
 All classes are created asynchronously.
 
-All classes are sharing a PubSub instance.
+All classes are sharing an `EventEmitter` instance.
 `XbmcApi.on` and `XbmcApi.emit` are wrappers to the shared PubSub. For instance:
 
 In CoffeeScript :
