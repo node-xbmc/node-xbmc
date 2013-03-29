@@ -22,6 +22,8 @@ All classes share a PubSub instance.
 In CoffeeScript :
 
 ```coffee
+{TCPConnection, xbmcApi} = require 'xbmc'
+
 connection = new TCPConnection
   host:    '127.0.0.1'
   port:    9090
