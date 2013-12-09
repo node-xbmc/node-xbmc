@@ -94,3 +94,7 @@ TODO
 ====
 
 More actions, new helpers, tests, ...
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/moul/node-xbmc/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
