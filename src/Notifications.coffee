@@ -17,7 +17,7 @@ class Notifications
 
   @play: (data) => @api.handlers.players data
 
-  @stop: => pubsub.emit 'api:playerStopped'
+  @stop: (data = null) => pubsub.emit 'api:playerStopped', data
 
   @add: =>
 
