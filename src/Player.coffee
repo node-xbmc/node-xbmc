@@ -15,6 +15,35 @@ class Player
       pubsub.emit 'player.open', data
       fn data if fn
 
+  @getActivePlayers: (fn = null) =>
+    dfd = @api.send 'Player.GetActivePlayers', {}
+    dfd.then (data) =>
+      pubsub.emit 'player.activePlayers', data
+      fn data if fn
+
+  @playPause: (fn = null) =>
+    @getActivePlayers (data) ->
+      playerId = data.result?.playerid || data.player?.playerid
+      dfd = @api.send 'Player.PlayPause',
+        playerid: playerId
+      dfd.then (data) =>
+        pubsub.emit 'player.playpause', data
+        fn data if fn
+
+  @forward = (fn = null) =>
+    @rewind true, fn
+
+  @rewind = (forward = false, fn = null) =>
+    speed = if forward then 'increment' else 'decrement'
+    @getActivePlayers (data) ->
+      playerId = data.result?.playerid || data.player?.playerid
+      dfd = @api.send 'Player.SetSpeed',
+        playerid: playerId
+        speed:    speed
+      dfd.then (data) =>
+        pubsub.emit 'player.setspeed', data
+        fn data if fn
+
   @openYoutube: (id, options = {}, fn = null) =>
     item = file: "plugin://plugin.video.youtube/?action=play_video&videoid=#{id}"
     @open item, options, fn
