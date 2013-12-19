@@ -30,6 +30,15 @@ class Player
         pubsub.emit 'player.playpause', data
         fn data if fn
 
+  @stop: (fn = null) =>
+    @getActivePlayers (data) ->
+      playerId = data.result?.playerid || data.player?.playerid
+      dfd = @api.send 'Player.Stop',
+        playerid: playerId
+      dfd.then (data) =>
+        pubsub.emit 'player.stop', data
+        fn data if fn
+
   @forward = (fn = null) =>
     @rewind true, fn
 
