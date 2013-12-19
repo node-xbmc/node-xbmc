@@ -80,7 +80,7 @@ class Connection
     @publish 'close', evt
 
   parseBuffer: (buffer) =>
-    @readRaw += buffer.toString()
+    @readRaw = buffer.toString()
     lines = []
     try
       line = JSON.parse @readRaw
@@ -95,9 +95,8 @@ class Connection
         continue unless rawline.length
         str = splitStr + rawline
         try
-          line = JSON.parse str
-          lines.push line
-          @readRaw = ''
+          @readRaw.replace(/}{/g, '}%%%%{').split(/%%%%/).forEach (part) ->
+            lines.push JSON.parse part
     return lines
 
   onMessage: (buffer) =>

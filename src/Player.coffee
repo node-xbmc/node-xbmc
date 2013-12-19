@@ -16,7 +16,7 @@ class Player
       fn data if fn
 
   @getActivePlayers: (fn = null) =>
-    dfd = @api.send 'Player.GetActivePlayers', {}
+    dfd = @api.send 'Player.GetActivePlayers'
     dfd.then (data) =>
       pubsub.emit 'player.activePlayers', data
       fn data if fn
