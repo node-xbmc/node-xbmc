@@ -1,6 +1,15 @@
 XBMC node controler
 ===================
 
+[![Build Status](https://travis-ci.org/moul/node-xbmc.png?branch=master)](https://travis-ci.org/moul/node-xbmc)
+[![authors](https://sourcegraph.com/api/repos/github.com/moul/node-xbmc/badges/authors.png)](https://sourcegraph.com/github.com/moul/node-xbmc)
+[![library users](https://sourcegraph.com/api/repos/github.com/moul/node-xbmc/badges/library-users.png)](https://sourcegraph.com/github.com/moul/node-xbmc)
+[![Total views](https://sourcegraph.com/api/repos/github.com/moul/node-xbmc/counters/views.png)](https://sourcegraph.com/github.com/moul/node-xbmc)
+[![Views in the last 24 hours](https://sourcegraph.com/api/repos/github.com/moul/node-xbmc/counters/views-24h.png)](https://sourcegraph.com/github.com/moul/node-xbmc)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/moul/node-xbmc/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
+![NPM Badge](https://nodei.co/npm/xbmc.png?downloads=true&stars=true "NPM Badge")
+
 This module uses [XBMC JSON-RPC Api V6](http://wiki.xbmc.org/index.php?title=JSON-RPC_API/v6) to provice a rich and simple API to communicate with XMBC instances.
 
 Documentation
@@ -94,7 +103,3 @@ TODO
 ====
 
 More actions, new helpers, tests, ...
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/moul/node-xbmc/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
