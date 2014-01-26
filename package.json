@@ -2,7 +2,7 @@
   "name": "xbmc",
   "version": "0.2.3",
   "description": "XBMC api",
-  "main": "index.js",
+  "main": "lib/index.js",
   "directories": {
     "example": "examples",
     "test": "test"
