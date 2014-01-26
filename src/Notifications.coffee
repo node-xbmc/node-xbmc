@@ -1,13 +1,16 @@
 pubsub = require './PubSub'
+debug = require('debug') 'Notifications'
 
 class Notifications
   @mixin: (api) ->
+    debug 'mixin'
     @api = api
     api.notifications = {}
     api.notifications[name] = method for name, method of @
     delete api.notifications.mixin
 
   @delegate: (data) =>
+    debug 'delegate', data
     type = data.method.split('.On')[1].toLowerCase()
     pubsub.emit "notification:#{type}", data
     if @[type]?
@@ -15,38 +18,46 @@ class Notifications
     else
       console.log "Unhandled notification type: #{type}"
 
-  @play: (data) => @api.handlers.players data
+  @play: (data) =>
+    debug 'play', data
+    @api.handlers.players data
 
-  @stop: (data = null) => pubsub.emit 'api:playerStopped', data
+  @stop: (data = null) =>
+    debug 'stop', data
+    pubsub.emit 'api:playerStopped', data
 
-  @add: =>
+  @add: => debug 'add'
 
-  @update: =>
+  @update: => debug 'update'
 
-  @clear: =>
+  @clear: => debug 'clear'
 
-  @scanstarted: =>
+  @scanstarted: => debug 'scanstarted'
 
-  @scanfinished: =>
+  @scanfinished: => debug 'scandfinished'
 
-  @pause: =>
+  @pause: => debug 'pause'
 
-  @screensaveractivated: =>
+  @screensaveractivated: => debug 'screensaveractivated'
 
-  @screensaverdeactivated: =>
+  @screensaverdeactivated: => debug 'screensaverdeactivated'
 
-  @seek: =>
+  @seek: => debug 'seek'
 
-  @volumechanged: =>
+  @volumechanged: => debug 'volumechanged'
 
-  @inputrequested: => pubsub.emit 'api:Input.OnInputRequested'
+  @inputrequested: =>
+    debug 'inputrequested'
+    pubsub.emit 'api:Input.OnInputRequested'
 
-  @inputfinished: =>  pubsub.emit 'api:Input.OnInputFinished'
+  @inputfinished: =>
+    debug 'inputfinished'
+    pubsub.emit 'api:Input.OnInputFinished'
 
-  @wake: =>
+  @wake: => debug 'wake'
 
-  @sleep: =>
+  @sleep: => debug 'sleep'
 
-  @remove: =>
+  @remove: => debug 'remove'
 
 module.exports = Notifications
