@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "dependencies": {
-    "node-promise": "0.5.5"
+    "node-promise": "0.5.5",
+    "debug": ""
   },
   "repository": {
     "type": "git",
