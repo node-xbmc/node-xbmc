@@ -1,7 +1,10 @@
 {EventEmitter} = require 'events'
+debug = require('debug') 'xbmc:PubSub'
 
 class PubSub extends EventEmitter
-  constructor: -> super
+  constructor: ->
+    debug 'constructor'
+    super
 
 pubsub = new PubSub()
 
