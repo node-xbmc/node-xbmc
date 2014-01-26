@@ -1,5 +1,4 @@
-#{EventEmitter} = require 'events'
-
+debug = require('debug') 'xbmc:TCPConnection'
 pubsub = require './PubSub'
 
 {defer} = require 'node-promise'
@@ -7,6 +6,7 @@ net =     require 'net'
 
 class Connection
   constructor: (@options = {}) ->
+    debug 'constructor', @options
     @options.port       ?= 9090
     @options.host       ?= '127.0.0.1'
     @options.user       ?= 'xbmc'
@@ -21,6 +21,7 @@ class Connection
       do @create
 
   create: =>
+    debug 'create'
     @socket = net.connect
       host: @options.host
       port: @options.port
@@ -34,9 +35,11 @@ class Connection
   @generateId: -> "__id#{++Connection._id}"
 
   isActive: =>
+    debug 'isActive'
     return @socket?._connecting is false
 
   send: (data = null) =>
+    debug 'send', data
     throw new Error 'Connection: Unknown arguments' if not data
     data.id ?= do Connection.generateId
     dfd = @deferreds[data.id] ?= defer()
@@ -50,6 +53,7 @@ class Connection
     return dfd.promise
 
   close: (fn = null) =>
+    debug 'close'
     try
       do @socket.end
       do @socket.destroy
@@ -59,6 +63,7 @@ class Connection
       fn err if fn
 
   publish: (topic, data = {}) =>
+    debug 'publish', topic, data
     #data.connection = @
     if @options.verbose
       dataVerbose = if typeof(data) is 'object' then JSON.stringify data else data
@@ -66,6 +71,7 @@ class Connection
     pubsub.emit "connection:#{topic}", data
 
   onOpen: =>
+    debug 'onOpen'
     @publish 'open'
     setTimeout (=>
       for item in @sendQueue
@@ -74,12 +80,15 @@ class Connection
     ), 500
 
   onError: (evt) =>
+    debug 'onError', evt
     @publish 'error', evt
 
   onClose: (evt) =>
+    debug 'onClose', evt
     @publish 'close', evt
 
   parseBuffer: (buffer) =>
+    debug 'parseBuffer'
     @readRaw = buffer.toString()
     lines = []
     try
@@ -100,6 +109,7 @@ class Connection
     return lines
 
   onMessage: (buffer) =>
+    debug 'onMessage'
     lines = @parseBuffer buffer
     for line in lines
       evt = {}
