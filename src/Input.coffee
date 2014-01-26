@@ -1,13 +1,16 @@
 pubsub = require './PubSub'
+debug = require('debug') 'xbmc:Input'
 
 class Input
   @mixin: (api) =>
+    debug 'mixin'
     @api = api
     api.input = {}
     api.input[name] = method for name, method of @
     delete api.input.mixin
 
   @SendText: (text, fn = null) =>
+    debug 'SendText', text
     dfd = @api.send 'Input.SendText',
       text: text
     dfd.then (data) ->
@@ -15,6 +18,7 @@ class Input
       fn data if fn
 
   @ExecuteAction: (action, fn = null) =>
+    debug 'ExecuteAction', action
     if @inputActions.indexOf(action) is -1
       throw new Error "Input.Action #{action} does not exists"
     dfd = @api.send 'Input.ExecuteAction',
@@ -32,6 +36,7 @@ for _key in Input.inputMethods
   do ->
     key = _key
     Input[key] = (fn = null) ->
+      debug 'Input', key
       dfd = @api.send "Input.#{key}"
       dfd.then (data) ->
         pubsub.emit "api:Input.#{key}", data
