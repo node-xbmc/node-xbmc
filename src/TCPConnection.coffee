@@ -63,11 +63,9 @@ class Connection
       fn err if fn
 
   publish: (topic, data = {}) =>
-    debug 'publish', topic, data
     #data.connection = @
-    if @options.verbose
-      dataVerbose = if typeof(data) is 'object' then JSON.stringify data else data
-      console.log "[connection:#{topic}]", dataVerbose if @options.verbose
+    dataVerbose = if typeof(data) is 'object' then JSON.stringify data else data
+    debug 'publish', topic, dataVerbose
     pubsub.emit "connection:#{topic}", data
 
   onOpen: =>
