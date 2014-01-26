@@ -17,7 +17,7 @@ class Input
   @ExecuteAction: (action, fn = null) =>
     if @inputActions.indexOf(action) is -1
       throw new Error "Input.Action #{action} does not exists"
-    dfd = @api.send 'Input.ExecuteAction'
+    dfd = @api.send 'Input.ExecuteAction',
       action: action
     dfd.then (data) ->
       pubsub.emit 'api:Input.ExecuteAction', data
