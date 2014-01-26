@@ -50,7 +50,7 @@ class XbmcApi
     obj.then @handlers.players
 
   send: (method, params = {}, dfd = null) =>
-    debug 'send', method, params
+    debug 'send', method, JSON.stringify params
     data =
       method: method
       params: params
@@ -74,8 +74,8 @@ class XbmcApi
       message:     message
       title:       title
       displaytime: displayTime
-      image:       image
-    @send 'GUI.ShowNotification', JSON.stringify options
+    options.image = image if image
+    @send 'GUI.ShowNotification', options
 
   connect: =>
     debug 'connection'
