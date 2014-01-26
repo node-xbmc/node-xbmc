@@ -1,5 +1,5 @@
 pubsub = require './PubSub'
-debug = require('debug') 'Notifications'
+debug = require('debug') 'xbmc:Notifications'
 
 class Notifications
   @mixin: (api) ->
