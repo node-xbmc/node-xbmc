@@ -1,13 +1,16 @@
 pubsub = require './PubSub'
+debug = require('debug') 'xbmc:Media'
 
 class Media
   @mixin: (api) ->
+    debug 'mixin'
     @api = api
     api.media = {}
     api.media[name] = method for name, method of @
     delete api.media.mixin
 
   @episode: (id) =>
+    debug 'episode', id
     dfd = @api.send 'VideoLibrary.GetEpisodeDetails',
       episodeid: id
       properties: [
@@ -22,6 +25,7 @@ class Media
       pubsub.emit 'api:episode', @api.scrub data.result.episodedetails
 
   @movies: (options = {}, fn = null) =>
+    debug 'movies', options
     args =
       properties: options.properties || []
       sort:       options.sort       || {}
@@ -32,6 +36,7 @@ class Media
       fn data if fn
 
   @movie: (id, fn = null) =>
+    debug 'movie', id
     dfd = @api.send 'VideoLibrary.GetMovieDetails',
       movieid: id
       properties: [
