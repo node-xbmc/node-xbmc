@@ -39,7 +39,7 @@ class Connection
     return @socket?._connecting is false
 
   send: (data = null) =>
-    debug 'send', data
+    debug 'send', JSON.stringify data
     throw new Error 'Connection: Unknown arguments' if not data
     data.id ?= do Connection.generateId
     dfd = @deferreds[data.id] ?= defer()
@@ -78,7 +78,7 @@ class Connection
     ), 500
 
   onError: (evt) =>
-    debug 'onError', evt
+    debug 'onError', JSON.stringify evt
     @publish 'error', evt
 
   onClose: (evt) =>

@@ -75,7 +75,7 @@ class XbmcApi
       title:       title
       displaytime: displayTime
       image:       image
-    @send 'GUI.ShowNotification', options
+    @send 'GUI.ShowNotification', JSON.stringify options
 
   connect: =>
     debug 'connection'
