@@ -2,6 +2,7 @@ XBMC node controler
 ===================
 
 [![Build Status](https://travis-ci.org/moul/node-xbmc.png?branch=master)](https://travis-ci.org/moul/node-xbmc)
+[![Dependency Status](https://david-dm.org/moul/node-xbmc.png?theme=shields.io)](https://david-dm.org/moul/node-xbmc)
 [![authors](https://sourcegraph.com/api/repos/github.com/moul/node-xbmc/badges/authors.png)](https://sourcegraph.com/github.com/moul/node-xbmc)
 [![library users](https://sourcegraph.com/api/repos/github.com/moul/node-xbmc/badges/library-users.png)](https://sourcegraph.com/github.com/moul/node-xbmc)
 [![Total views](https://sourcegraph.com/api/repos/github.com/moul/node-xbmc/counters/views.png)](https://sourcegraph.com/github.com/moul/node-xbmc)
