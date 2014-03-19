@@ -32,13 +32,13 @@ All classes are sharing an `EventEmitter` instance.
 In CoffeeScript :
 
 ```coffee
-{TCPConnection, xbmcApi} = require 'xbmc'
+{TCPConnection, XbmcApi} = require 'xbmc'
 
 connection = new TCPConnection
   host:    '127.0.0.1'
   port:    9090
   verbose: true
-xbmc = new xbmcApi
+xbmc = new XbmcApi
 xbmc.setConnection connection
 
 xbmc.on 'connection:open',                        -> console.log 'Connection is open'
@@ -69,12 +69,14 @@ TCPConnection uses a deferred (promise) mechanism.
 Following two examples are both working:
 
 ```coffee
+{TCPConnection, XbmcApi} = require 'xbmc'
+
 connection = new TCPConnection
   host:    '127.0.0.1'
   port:    9090
   verbose: true
 
-xbmc = new xbmcApi
+xbmc = new XbmcApi
 xbmc.setConnection connection
 
 # run actions after received a 'connection:open' event
