@@ -13,6 +13,8 @@ XBMC node controler
 
 This module uses [XBMC JSON-RPC Api V6](http://wiki.xbmc.org/index.php?title=JSON-RPC_API/v6) to provice a rich and simple API to communicate with XMBC instances.
 
+[![Gitter chat](https://badges.gitter.im/moul/node-xbmc.png)](https://gitter.im/moul/node-xbmc)
+
 Documentation
 =============
 
