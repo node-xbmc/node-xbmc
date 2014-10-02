@@ -13,6 +13,7 @@ class Connection
     @options.password   ?= false
     @options.verbose    ?= false
     @options.connectNow ?= true
+    @options.timeout    ?= 0
 
     @readRaw = ''
     @sendQueue = []
@@ -27,9 +28,11 @@ class Connection
       port: @options.port
     @socket.on 'connect',    @onOpen
     @socket.on 'data',       @onMessage
+    @socket.on 'end',        @onClose
+    @socket.on 'timeout',    @onTimeout
     @socket.on 'error',      @onError
-    @socket.on 'disconnect', @onClose
     @socket.on 'close',      @onClose
+    @socket.setTimeout @options.timeout
 
   @_id: 0
   @generateId: -> "__id#{++Connection._id}"
@@ -80,6 +83,10 @@ class Connection
   onError: (evt) =>
     debug 'onError', JSON.stringify evt
     @publish 'error', evt
+
+  onTimeout: (evt) =>
+    debug 'onTimeout', JSON.stringify evt
+    @publish 'timeout', evt
 
   onClose: (evt) =>
     debug 'onClose', evt
