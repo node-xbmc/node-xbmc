@@ -15,8 +15,7 @@
     "debug": ""
   },
   "devDependencies": {
-      "coffee-script": "*",
-      "docco": ""
+      "coffee-script": "*"
   },
   "repository": {
     "type": "git",
