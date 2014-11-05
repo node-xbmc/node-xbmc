@@ -14,6 +14,10 @@
     "node-promise": "0.5",
     "debug": ""
   },
+  "devDependencies": {
+      "coffee-script": "*",
+      "docco": ""
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/moul/node-xbmc"
