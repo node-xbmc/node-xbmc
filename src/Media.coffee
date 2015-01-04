@@ -73,7 +73,7 @@ class Media
       @_result data, 'movies', 'movies', fn
 
   @movie: (id, options = {}, fn = null) =>
-    debug 'movie', id, options, fn
+    debug 'movie', id, options
     # Legacy: old versions didn't have options parameter
     if typeof options == 'function'
       fn = options
