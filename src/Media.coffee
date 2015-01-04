@@ -15,6 +15,37 @@ class Media
     fn d if fn
     d
 
+  @tvshows: (options = {}, fn = null) =>
+    debug 'tvshows', options
+    args =
+      properties: options.properties || []
+      sort:       options.sort       || {}
+      limits:     options.limits     || {}
+    dfd = @api.send 'VideoLibrary.GetTVShows', args
+    dfd.then (data) =>
+      @_result data, 'tvshows', 'tvshow', fn
+
+  @tvshow: (id, options = {}, fn = null) =>
+    debug 'tvshow', id, options
+    args =
+      tvshowid: id
+      properties: options.properties || []
+    dfd = @api.send 'VideoLibrary.GetTVShowDetails', args
+    dfd.then (data) =>
+      @_result data, 'tvshowdetails', 'tvshow', fn
+
+  @episodes: (tvshowid = -1, season = -1, options = {}, fn = null) =>
+    debug 'episodes', options
+    args =
+      properties: options.properties || []
+      sort:       options.sort       || {}
+      limits:     options.limits     || {}
+    args.tvshowid = tvshowid if tvshowid >= 0
+    args.season = season if season >= 0
+    dfd = @api.send 'VideoLibrary.GetEpisodes', args
+    dfd.then (data) =>
+      @_result data, 'episodes', 'episodes', fn
+
   @episode: (id, options = {}, fn = null) =>
     debug 'episode', id
     dfd = @api.send 'VideoLibrary.GetEpisodeDetails',
