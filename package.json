@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "dependencies": {
-    "clarinet": "^0.9.1",
+    "clarinet": "~0.9.1",
     "debug": "",
     "node-promise": "0.5"
   },
