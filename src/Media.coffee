@@ -15,11 +15,11 @@ class Media
     fn d if fn
     d
 
-  @episode: (id) =>
+  @episode: (id, options = {}, fn = null) =>
     debug 'episode', id
     dfd = @api.send 'VideoLibrary.GetEpisodeDetails',
       episodeid: id
-      properties: [
+      properties: options.properties || [
         'title'
         'showtitle'
         'plot'
@@ -28,7 +28,7 @@ class Media
         'thumbnail'
       ]
     dfd.then (data) =>
-      @_result data, 'episodedetails', 'episode'
+      @_result data, 'episodedetails', 'episode', fn
 
   @movies: (options = {}, fn = null) =>
     debug 'movies', options
