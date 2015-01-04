@@ -47,8 +47,8 @@ class Media
       @_result data, 'episodes', 'episodes', fn
 
   @episode: (id, options = {}, fn = null) =>
-    debug 'episode', id
-    dfd = @api.send 'VideoLibrary.GetEpisodeDetails',
+    debug 'episode', id, options
+    args =
       episodeid: id
       properties: options.properties || [
         'title'
@@ -58,6 +58,7 @@ class Media
         'episode'
         'thumbnail'
       ]
+    dfd = @api.send 'VideoLibrary.GetEpisodeDetails', args
     dfd.then (data) =>
       @_result data, 'episodedetails', 'episode', fn
 
