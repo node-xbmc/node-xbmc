@@ -9,6 +9,12 @@ class Media
     api.media[name] = method for name, method of @
     delete api.media.mixin
 
+  @_result: (data, field, evt, fn) =>
+    d = @api.scrub data.result[field]
+    pubsub.emit 'api:' + evt, d
+    fn d if fn
+    d
+
   @episode: (id) =>
     debug 'episode', id
     dfd = @api.send 'VideoLibrary.GetEpisodeDetails',
@@ -22,7 +28,7 @@ class Media
         'thumbnail'
       ]
     dfd.then (data) =>
-      pubsub.emit 'api:episode', @api.scrub data.result.episodedetails
+      @_result data, 'episodedetails', 'episode'
 
   @movies: (options = {}, fn = null) =>
     debug 'movies', options
@@ -32,8 +38,7 @@ class Media
       limits:     options.limits     || {}
     dfd = @api.send 'VideoLibrary.GetMovies', args
     dfd.then (data) =>
-      pubsub.emit 'api:movies', data.result.movies
-      fn data if fn
+      @_result data, 'movies', 'movies', fn
 
   @movie: (id, fn = null) =>
     debug 'movie', id
@@ -47,8 +52,6 @@ class Media
         'thumbnail'
       ]
     dfd.then (data) =>
-      d = @api.scrub data.result.moviedetails
-      pubsub.emit 'api:movie', d
-      fn d if fn
+      @_result data, 'moviedetails', 'movie', fn
 
 module.exports = Media
