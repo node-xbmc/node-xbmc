@@ -26,7 +26,7 @@ class Connection
       host: @options.host
       port: @options.port
     @socket.on 'connect',    @onOpen
-    @socket.on 'data',       @onMessage
+    @socket.on 'data',       @onData
     @socket.on 'error',      @onError
     @socket.on 'disconnect', @onClose
     @socket.on 'close',      @onClose
@@ -87,28 +87,33 @@ class Connection
 
   parseBuffer: (buffer) =>
     debug 'parseBuffer'
-    @readRaw = buffer.toString()
-    lines = []
+    if buffer.length == 0
+      return [[], '']
+    re = /(\{[\s\S]*?\})(?=\{|$)/g
+    parts = []
+    while (match = re.exec buffer) != null
+      parts.push match[1]
+    tail = buffer.substr re.lastIndex
+    results = []
+    for part in parts
+      try
+        parsed = JSON.parse part
+        results.push parsed
+      catch ex
+        throw new Error "JSON parse error: #{ex}"
     try
-      line = JSON.parse @readRaw
-      lines.push line
-      @readRaw = ''
-    catch err
-      # Hack: sometimes json are concat
-      splitStr = '{"jsonrpc":"2.0"'
-      rawlines = @readRaw.split splitStr
-      lines = []
-      for rawline in rawlines
-        continue unless rawline.length
-        str = splitStr + rawline
-        try
-          @readRaw.replace(/}{/g, '}%%%%{').split(/%%%%/).forEach (part) ->
-            lines.push JSON.parse part
-    return lines
+      parsedTail = JSON.parse tail
+      tail = ''
+      results.push parsedTail
+    catch e
+      # Probably just incomplete, so keep appending
+    return [results, tail]
 
-  onMessage: (buffer) =>
-    debug 'onMessage'
-    lines = @parseBuffer buffer
+  onData: (buffer) =>
+    debug 'onData'
+    @readRaw += buffer.toString()
+    [lines, remainder] = @parseBuffer @readRaw
+    @readRaw = remainder
     for line in lines
       evt = {}
       evt.data = line
