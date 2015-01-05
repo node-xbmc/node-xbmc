@@ -9,11 +9,48 @@ class Media
     api.media[name] = method for name, method of @
     delete api.media.mixin
 
-  @episode: (id) =>
-    debug 'episode', id
-    dfd = @api.send 'VideoLibrary.GetEpisodeDetails',
+  @_result: (data, field, evt, fn) =>
+    d = @api.scrub data.result[field]
+    pubsub.emit 'api:' + evt, d
+    fn d if fn
+    d
+
+  @tvshows: (options = {}, fn = null) =>
+    debug 'tvshows', options
+    args =
+      properties: options.properties || []
+      sort:       options.sort       || {}
+      limits:     options.limits     || {}
+    dfd = @api.send 'VideoLibrary.GetTVShows', args
+    dfd.then (data) =>
+      @_result data, 'tvshows', 'tvshow', fn
+
+  @tvshow: (id, options = {}, fn = null) =>
+    debug 'tvshow', id, options
+    args =
+      tvshowid: id
+      properties: options.properties || []
+    dfd = @api.send 'VideoLibrary.GetTVShowDetails', args
+    dfd.then (data) =>
+      @_result data, 'tvshowdetails', 'tvshow', fn
+
+  @episodes: (tvshowid = -1, season = -1, options = {}, fn = null) =>
+    debug 'episodes', options
+    args =
+      properties: options.properties || []
+      sort:       options.sort       || {}
+      limits:     options.limits     || {}
+    args.tvshowid = tvshowid if tvshowid >= 0
+    args.season = season if season >= 0
+    dfd = @api.send 'VideoLibrary.GetEpisodes', args
+    dfd.then (data) =>
+      @_result data, 'episodes', 'episodes', fn
+
+  @episode: (id, options = {}, fn = null) =>
+    debug 'episode', id, options
+    args =
       episodeid: id
-      properties: [
+      properties: options.properties || [
         'title'
         'showtitle'
         'plot'
@@ -21,8 +58,9 @@ class Media
         'episode'
         'thumbnail'
       ]
+    dfd = @api.send 'VideoLibrary.GetEpisodeDetails', args
     dfd.then (data) =>
-      pubsub.emit 'api:episode', @api.scrub data.result.episodedetails
+      @_result data, 'episodedetails', 'episode', fn
 
   @movies: (options = {}, fn = null) =>
     debug 'movies', options
@@ -32,14 +70,18 @@ class Media
       limits:     options.limits     || {}
     dfd = @api.send 'VideoLibrary.GetMovies', args
     dfd.then (data) =>
-      pubsub.emit 'api:movies', data.result.movies
-      fn data if fn
+      @_result data, 'movies', 'movies', fn
 
-  @movie: (id, fn = null) =>
-    debug 'movie', id
+  @movie: (id, options = {}, fn = null) =>
+    debug 'movie', id, options
+    # Legacy: old versions didn't have options parameter
+    if typeof options == 'function'
+      fn = options
+      options = null
+    options = options || {}
     dfd = @api.send 'VideoLibrary.GetMovieDetails',
       movieid: id
-      properties: [
+      properties: options.properties || [
         'title'
         'year'
         'plotoutline'
@@ -47,8 +89,6 @@ class Media
         'thumbnail'
       ]
     dfd.then (data) =>
-      d = @api.scrub data.result.moviedetails
-      pubsub.emit 'api:movie', d
-      fn d if fn
+      @_result data, 'moviedetails', 'movie', fn
 
 module.exports = Media
