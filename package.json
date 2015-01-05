@@ -11,11 +11,12 @@
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "dependencies": {
-    "node-promise": "0.5",
-    "debug": ""
+    "clarinet": "~0.9.1",
+    "debug": "",
+    "node-promise": "0.5"
   },
   "devDependencies": {
-      "coffee-script": "*"
+    "coffee-script": "*"
   },
   "repository": {
     "type": "git",

@@ -2,6 +2,7 @@ debug = require('debug') 'xbmc:TCPConnection'
 pubsub = require './PubSub'
 
 {defer} = require 'node-promise'
+clarinet = require 'clarinet'
 net =     require 'net'
 
 class Connection
@@ -14,7 +15,8 @@ class Connection
     @options.verbose    ?= false
     @options.connectNow ?= true
 
-    @readRaw = ''
+    do @_createParser
+
     @sendQueue = []
     @deferreds = {}
     if @options.connectNow
@@ -26,7 +28,7 @@ class Connection
       host: @options.host
       port: @options.port
     @socket.on 'connect',    @onOpen
-    @socket.on 'data',       @onMessage
+    @socket.on 'data',       @onData
     @socket.on 'error',      @onError
     @socket.on 'disconnect', @onClose
     @socket.on 'close',      @onClose
@@ -84,41 +86,62 @@ class Connection
   onClose: (evt) =>
     debug 'onClose', evt
     @publish 'close', evt
+    @parser.close()
 
-  parseBuffer: (buffer) =>
-    debug 'parseBuffer'
-    @readRaw = buffer.toString()
-    lines = []
-    try
-      line = JSON.parse @readRaw
-      lines.push line
-      @readRaw = ''
-    catch err
-      # Hack: sometimes json are concat
-      splitStr = '{"jsonrpc":"2.0"'
-      rawlines = @readRaw.split splitStr
-      lines = []
-      for rawline in rawlines
-        continue unless rawline.length
-        str = splitStr + rawline
-        try
-          @readRaw.replace(/}{/g, '}%%%%{').split(/%%%%/).forEach (part) ->
-            lines.push JSON.parse part
-    return lines
+  onData: (buffer) =>
+    debug 'onData'
+    @parser.write buffer.toString()
 
-  onMessage: (buffer) =>
-    debug 'onMessage'
-    lines = @parseBuffer buffer
-    for line in lines
-      evt = {}
-      evt.data = line
-      id = evt.data?.id
-      dfd = @deferreds[id]
-      delete @deferreds[id]
-      if evt.data.error
-        @onError evt
-        dfd.reject evt.data if dfd
-        continue
+  _createParser: =>
+    @parser = clarinet.parser()
+    stack = []
+    currentKey = null
+    addValue = (val) =>
+      if Array.isArray stack[0]
+        stack[0].push val
+      else
+        stack[0][currentKey] = val
+    @parser.onerror = (ex) =>
+      #debug 'parser.onerror', ex, stack.length
+      throw new Error "JSON parse error: #{ex}"
+    @parser.onvalue = (val) =>
+      #debug 'parser.onvalue', val, stack.length
+      addValue(val)
+    @parser.onopenobject = (key) =>
+      #debug 'parser.onopenobject', key, stack.length
+      obj = {}
+      addValue obj if stack.length
+      stack.unshift obj
+      currentKey = key
+    @parser.onkey = (key) =>
+      #debug 'parser.onkey', key, stack.length
+      currentKey = key
+    @parser.oncloseobject = () =>
+      #debug 'parser.oncloseobject', stack.length
+      obj = stack.shift()
+      if stack.length == 0
+        @_receive obj
+    @parser.onopenarray = () =>
+      #debug 'parser.onopenarray', stack.length
+      arr = []
+      addValue arr if stack.length
+      stack.unshift arr
+    @parser.onclosearray = () =>
+      #debug 'parser.onclosearray', stack.length
+      stack.shift()
+    @parser.onend = () =>
+      #debug 'parser.onend'
+
+  _receive: (data) =>
+    evt =
+      data: data
+    id = evt.data?.id
+    dfd = @deferreds[id]
+    delete @deferreds[id]
+    if evt.data.error
+      @onError evt
+      dfd.reject evt.data if dfd
+    else
       @publish 'data', evt.data
       if evt.data.method?.indexOf '.On' > 1
         @publish 'notification', evt.data
