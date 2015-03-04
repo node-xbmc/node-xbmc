@@ -1,0 +1,24 @@
+{
+    "name": "kodi",
+    "version": "0.4.1",
+    "description": "KODI api",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 0"
+    },
+    "dependencies": {
+        "xbmc": "~0.4.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/moul/node-xbmc"
+    },
+    "keywords": [
+        "kodi",
+        "xbmc",
+        "api"
+    ],
+    "author": "Manfred Touron <m@42.am>",
+    "license": "MIT",
+    "readmeFilename": "README.md"
+}
