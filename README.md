@@ -1,5 +1,5 @@
-XBMC node controler
-===================
+XBMC node controller
+====================
 
 [![Build Status](https://travis-ci.org/moul/node-xbmc.png?branch=master)](https://travis-ci.org/moul/node-xbmc)
 [![Dependency Status](https://david-dm.org/moul/node-xbmc.png?theme=shields.io)](https://david-dm.org/moul/node-xbmc)
@@ -52,7 +52,7 @@ In JavaScript :
 
 ```javascript
   var Xbmc = require('xbmc');
-  
+
   var connection = new Xbmc.TCPConnection({
     host: '127.0.0.1',
     port: 9000,
