@@ -1,7 +1,7 @@
 {
   "name": "xbmc",
   "version": "0.4.1",
-  "description": "XBMC api",
+  "description": "Kodi/XBMC api",
   "main": "lib/index.js",
   "directories": {
     "example": "examples",
@@ -23,6 +23,7 @@
     "url": "git://github.com/moul/node-xbmc"
   },
   "keywords": [
+    "kodi",
     "xbmc",
     "api"
   ],
