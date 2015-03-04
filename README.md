@@ -1,5 +1,5 @@
-XBMC node controller
-====================
+Kodi/XBMC node controller
+=========================
 
 [![Build Status](https://travis-ci.org/moul/node-xbmc.png?branch=master)](https://travis-ci.org/moul/node-xbmc)
 [![Dependency Status](https://david-dm.org/moul/node-xbmc.png?theme=shields.io)](https://david-dm.org/moul/node-xbmc)
