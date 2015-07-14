@@ -3,11 +3,7 @@ Kodi/XBMC node controller
 
 [![Build Status](https://img.shields.io/travis/moul/node-xbmc.svg)](https://travis-ci.org/moul/node-xbmc)
 [![Dependency Status](https://img.shields.io/david/moul/node-xbmc.svg)](https://david-dm.org/moul/node-xbmc)
-[![authors](https://sourcegraph.com/api/repos/github.com/moul/node-xbmc/badges/authors.png)](https://sourcegraph.com/github.com/moul/node-xbmc)
-[![library users](https://sourcegraph.com/api/repos/github.com/moul/node-xbmc/badges/library-users.png)](https://sourcegraph.com/github.com/moul/node-xbmc)
-[![Total views](https://sourcegraph.com/api/repos/github.com/moul/node-xbmc/counters/views.png)](https://sourcegraph.com/github.com/moul/node-xbmc)
-[![Views in the last 24 hours](https://sourcegraph.com/api/repos/github.com/moul/node-xbmc/counters/views-24h.png)](https://sourcegraph.com/github.com/moul/node-xbmc)
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/moul/node-xbmc/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
 
 ![NPM Badge](https://nodei.co/npm/xbmc.png?downloads=true&stars=true "NPM Badge")
 
