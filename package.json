@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/moul/node-xbmc"
+    "url": "git://github.com/node-xbmc/node-xbmc"
   },
   "keywords": [
     "kodi",

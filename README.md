@@ -1,15 +1,15 @@
 Kodi/XBMC node controller
 =========================
 
-[![Build Status](https://img.shields.io/travis/moul/node-xbmc.svg)](https://travis-ci.org/moul/node-xbmc)
-[![Dependency Status](https://img.shields.io/david/moul/node-xbmc.svg)](https://david-dm.org/moul/node-xbmc)
+[![Build Status](https://img.shields.io/travis/node-xbmc/node-xbmc.svg)](https://travis-ci.org/node-xbmc/node-xbmc)
+[![Dependency Status](https://img.shields.io/david/node-xbmc/node-xbmc.svg)](https://david-dm.org/node-xbmc/node-xbmc)
 
 
 ![NPM Badge](https://nodei.co/npm/xbmc.png?downloads=true&stars=true "NPM Badge")
 
 This module uses [XBMC JSON-RPC Api V6](http://wiki.xbmc.org/index.php?title=JSON-RPC_API/v6) to provice a rich and simple API to communicate with XMBC instances.
 
-[![Gitter chat](https://badges.gitter.im/moul/node-xbmc.png)](https://gitter.im/moul/node-xbmc)
+[![Gitter chat](https://badges.gitter.im/node-xbmc/node-xbmc.png)](https://gitter.im/node-xbmc/node-xbmc)
 
 Documentation
 =============
@@ -98,7 +98,7 @@ xbmc.message 'Hello World'
 SEE ALSO
 ========
 
-* [Examples](https://github.com/moul/node-xbmc/tree/master/examples)
+* [Examples](https://github.com/node-xbmc/node-xbmc/tree/master/examples)
 
 TODO
 ====
