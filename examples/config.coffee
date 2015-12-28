@@ -6,5 +6,3 @@ module.exports =
 try
   module.exports = require './config.local'
 catch e
-
-
