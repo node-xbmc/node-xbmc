@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "clarinet": "^0.11.0",
-    "debug": "",
-    "node-promise": "0.5"
+    "debug": "^2.2.0",
+    "node-promise": "^0.5.12"
   },
   "devDependencies": {
     "coffee-script": "*"
