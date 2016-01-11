@@ -14,4 +14,5 @@ xbmcApi = new XbmcApi
   silent:     false
   connection: connection
 
-xbmcApi.player.stop()
+xbmcApi.player.stop ->
+  console.log 'done'

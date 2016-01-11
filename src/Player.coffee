@@ -28,7 +28,11 @@ class Player
   @playPause: (fn = null) =>
     debug 'playPause'
     @getActivePlayers (data) =>
-      playerId = data.result?[0].playerid || data.player?.playerid
+      playerId = data.result?[0]?.playerid || data.player?.playerid
+      unless playerId
+        debug 'no playerId, is there a media playing right now ?'
+        return
+
       dfd = @api.send 'Player.PlayPause',
         playerid: playerId
       dfd.then (data) =>
@@ -38,7 +42,10 @@ class Player
   @stop: (fn = null) =>
     debug 'stop'
     @getActivePlayers (data) =>
-      playerId = data.result?[0].playerid || data.player?.playerid
+      playerId = data.result?[0]?.playerid || data.player?.playerid
+      unless playerId
+        debug 'no playerId, is there a media playing right now ?'
+        return
       dfd = @api.send 'Player.Stop', playerid: playerId
       dfd.then (data) =>
         pubsub.emit 'player.stop', data
@@ -52,7 +59,11 @@ class Player
     speed = if forward then 'increment' else 'decrement'
     debug 'rewind', speed
     @getActivePlayers (data) =>
-      playerId = data.result?[0].playerid || data.player?.playerid
+      playerId = data.result?[0]?.playerid || data.player?.playerid
+      unless playerId
+        debug 'no playerId, is there a media playing right now ?'
+        return
+
       dfd = @api.send 'Player.SetSpeed',
         playerid: playerId
         speed:    speed

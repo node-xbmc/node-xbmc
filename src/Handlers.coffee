@@ -10,7 +10,8 @@ class Handlers
 
   @players: (data) =>
     debug 'players', data
-    playerId = (data.result?[0] || data.player || {}).playerid
+    playerId = data.result?[0]?.playerid || data.player?.playerid
+
     if playerId
       dfd = @api.send 'Player.GetItem', { playerid: playerId }
       dfd.then @playerItem

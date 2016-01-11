@@ -17,6 +17,8 @@
     connection: connection
   });
 
-  xbmcApi.player.stop();
+  xbmcApi.player.stop(function() {
+    return console.log('done');
+  });
 
 }).call(this);
