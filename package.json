@@ -1,6 +1,6 @@
 {
   "name": "xbmc",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Kodi/XBMC api",
   "main": "lib/index.js",
   "directories": {
