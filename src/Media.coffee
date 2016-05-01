@@ -9,8 +9,8 @@ class Media
     api.media[name] = method for name, method of @
     delete api.media.mixin
 
-  @_result: (data, field, evt, fn) =>
-    d = @api.scrub data.result[field]
+  @_result: (data, field, evt, defaultValue, fn) =>
+    d = if data.result[field] then @api.scrub data.result[field] else defaultValue
     pubsub.emit 'api:' + evt, d
     fn d if fn
     d
@@ -23,7 +23,7 @@ class Media
       limits:     options.limits     || {}
     dfd = @api.send 'VideoLibrary.GetTVShows', args
     dfd.then (data) =>
-      @_result data, 'tvshows', 'tvshow', fn
+      @_result data, 'tvshows', 'tvshow', [], fn
 
   @tvshow: (id, options = {}, fn = null) =>
     debug 'tvshow', id, options
@@ -32,7 +32,7 @@ class Media
       properties: options.properties || []
     dfd = @api.send 'VideoLibrary.GetTVShowDetails', args
     dfd.then (data) =>
-      @_result data, 'tvshowdetails', 'tvshow', fn
+      @_result data, 'tvshowdetails', 'tvshow', null, fn
 
   @episodes: (tvshowid = -1, season = -1, options = {}, fn = null) =>
     debug 'episodes', options
@@ -44,7 +44,7 @@ class Media
     args.season = season if season >= 0
     dfd = @api.send 'VideoLibrary.GetEpisodes', args
     dfd.then (data) =>
-      @_result data, 'episodes', 'episodes', fn
+      @_result data, 'episodes', 'episodes', [], fn
 
   @episode: (id, options = {}, fn = null) =>
     debug 'episode', id, options
@@ -60,7 +60,7 @@ class Media
       ]
     dfd = @api.send 'VideoLibrary.GetEpisodeDetails', args
     dfd.then (data) =>
-      @_result data, 'episodedetails', 'episode', fn
+      @_result data, 'episodedetails', 'episode', null, fn
 
   @movies: (options = {}, fn = null) =>
     debug 'movies', options
@@ -70,7 +70,7 @@ class Media
       limits:     options.limits     || {}
     dfd = @api.send 'VideoLibrary.GetMovies', args
     dfd.then (data) =>
-      @_result data, 'movies', 'movies', fn
+      @_result data, 'movies', 'movies', [], fn
 
   @movie: (id, options = {}, fn = null) =>
     debug 'movie', id, options
@@ -89,6 +89,6 @@ class Media
         'thumbnail'
       ]
     dfd.then (data) =>
-      @_result data, 'moviedetails', 'movie', fn
+      @_result data, 'moviedetails', 'movie', null, fn
 
 module.exports = Media
