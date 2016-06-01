@@ -96,6 +96,7 @@ class Connection
     @parser = clarinet.parser()
     stack = []
     currentKey = null
+    publish = @publish
     addValue = (val) =>
       if Array.isArray stack[0]
         stack[0].push val
@@ -103,7 +104,7 @@ class Connection
         stack[0][currentKey] = val
     @parser.onerror = (ex) =>
       #debug 'parser.onerror', ex, stack.length
-      throw new Error "JSON parse error: #{ex}"
+      publish 'error', ex
     @parser.onvalue = (val) =>
       #debug 'parser.onvalue', val, stack.length
       addValue(val)
